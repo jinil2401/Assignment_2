@@ -8,12 +8,12 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B501DA6D-F6AE-4388-BCE1-E1A7CAAD1F29}</ProjectGuid>
+    <ProjectGuid>{DA3B797F-5215-43BC-B483-4D668537ECAB}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Assignment_2</RootNamespace>
-    <AssemblyName>Assignment_2</AssemblyName>
+    <RootNamespace>Project_cumulative1</RootNamespace>
+    <AssemblyName>Project_cumulative1</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -155,15 +155,18 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Controllers\Art.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\J1Controller.cs" />
-    <Compile Include="Controllers\J2Controller.cs" />
-    <Compile Include="Controllers\J3Controller.cs" />
+    <Compile Include="Controllers\STUDENTController.cs" />
+    <Compile Include="Controllers\STUDENTDATAController.cs" />
+    <Compile Include="Controllers\TEACHERController.cs" />
+    <Compile Include="Controllers\TEACHERDATAController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\SchoolDbContext.cs" />
+    <Compile Include="Models\Student.cs" />
+    <Compile Include="Models\Teacher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -234,7 +237,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\bootstrap.min.js.map" />
@@ -323,9 +325,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>49334</DevelopmentServerPort>
+          <DevelopmentServerPort>49981</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49334/</IISUrl>
+          <IISUrl>http://localhost:49981/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
