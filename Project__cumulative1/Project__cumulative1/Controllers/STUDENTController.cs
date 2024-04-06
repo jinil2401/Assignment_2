@@ -7,7 +7,7 @@ using Project__cumulative1.Controllers;
 using Project__cumulative1.Models;
 
 
-namespace Project__cumulative1_.Controllers
+namespace Project__cumulative1.Controllers
 {
     public class StudentController : Controller
     {

@@ -1,11 +1,10 @@
-﻿using MySql.Data.MySqlClient;
-using Project__cumulative1.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using Project__cumulative1.Models;
+using MySql.Data.MySqlClient;
 using System.Web.Http;
 
 namespace Project__cumulative1.Controllers
@@ -25,9 +24,10 @@ namespace Project__cumulative1.Controllers
         /// </returns>
         [HttpGet]
         [Route("api/TeacherData/ListTeachers/{SearchKey?}")]
-        public IEnumerable<TEACHER> ListTeachers(string SearchKey = null)
+        public IEnumerable<Teacher> ListTeachers(string SearchKey = null)
         {
             MySqlConnection Conn = School.AccessDatabase();
+
             Conn.Open();
 
             MySqlCommand cmd = Conn.CreateCommand();
@@ -39,8 +39,8 @@ namespace Project__cumulative1.Controllers
 
             MySqlDataReader ResultSet = cmd.ExecuteReader();
 
-            List<TEACHER> Teachers = new List<TEACHER> { };
-                  
+            List<Teacher> Teachers = new List<Teacher> { };
+
             while (ResultSet.Read())
             {
                 int TeacherId = (int)ResultSet["teacherid"];
@@ -50,7 +50,7 @@ namespace Project__cumulative1.Controllers
                 DateTime HireDate = (DateTime)ResultSet["hiredate"];
                 decimal Salary = (decimal)ResultSet["salary"];
 
-                TEACHER NewTeacher = new TEACHER();
+                Teacher NewTeacher = new Teacher();
                 NewTeacher.TeacherId = TeacherId;
                 NewTeacher.TeacherFname = TeacherFname;
                 NewTeacher.TeacherLname = TeacherLname;
@@ -68,11 +68,12 @@ namespace Project__cumulative1.Controllers
         }
 
         [HttpGet]
-        public TEACHER FindTeacher(int id)
+        public Teacher FindTeacher(int id)
         {
-            TEACHER NewTeacher = new TEACHER();
+            Teacher NewTeacher = new Teacher();
 
             MySqlConnection Conn = School.AccessDatabase();
+
             Conn.Open();
 
             MySqlCommand cmd = Conn.CreateCommand();
@@ -104,8 +105,71 @@ namespace Project__cumulative1.Controllers
 
             return NewTeacher;
         }
+        /// <summary>
+        /// This method will add a new teacher in the database
+        /// </summary>
+        /// <param name="NewTeacher">Teacher Object</param>
+        /// <returns></returns>
+        /// <example>
+        /// api/TeacherData/AddTeacher
+        /// POST DATA: Teacher Object
+        /// </example>
+        [HttpPost]
+
+        public void AddTeacher([FromBody] Teacher NewTeacher)
+        {
+            MySqlConnection Conn = School.AccessDatabase();
+
+
+            Conn.Open();
+
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            string query = "insert into teachers (teacherid, teacherfname, teacherlname, employeenumber, hiredate, salary) values (@TeacherId, @TeacherFname, @TeacherLname, @EmployeeNumber, @HireDate, @Salary)";
+
+            cmd.CommandText = query;
+
+            cmd.Parameters.AddWithValue("@TeacherId", NewTeacher.TeacherId);
+            cmd.Parameters.AddWithValue("@TeacherFname", NewTeacher.TeacherFname);
+            cmd.Parameters.AddWithValue("@TeacherLname", NewTeacher.TeacherLname);
+            cmd.Parameters.AddWithValue("@EmployeeNumber", NewTeacher.EmployeeNumber);
+            cmd.Parameters.AddWithValue("@HireDate", NewTeacher.HireDate);
+            cmd.Parameters.AddWithValue("@Salary", NewTeacher.Salary);
+
+
+            cmd.Prepare();
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+
+        }
+
+        /// <summary>
+        /// This method will delete a teacher in the database
+        /// </summary>
+        /// <param name="TeacherId">The teacher id primary key</param>
+        /// <example>
+        /// POST: api/teacherdata/deleteteacher/2
+        /// </example>
+        [HttpPost]
+        public void DeleteTeacher(int id)
+        {
+            MySqlConnection Conn = School.AccessDatabase();
+
+            Conn.Open();
+
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            string query = "DELETE from teachers where teacherid=@id";
+            cmd.CommandText = query;
+
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Prepare();
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+
+        }
 
     }
-
-  
 }
